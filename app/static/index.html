@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="dark-theme">
     <div class="app-container">
         <!-- Top Navbar -->
         <header class="navbar">
@@ -30,15 +30,19 @@
                 </select>
             </div>
 
-            <div class="nav-actions">
+            <div class="nav-actions" style="display:flex; align-items:center; gap:8px;">
+                <!-- Dark / Light Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark / Light Theme">
+                    <span id="themeIcon">☀️</span> <span id="themeLabel">Light Mode</span>
+                </button>
                 <button class="send-btn" onclick="toggleAiDrawer()" style="padding: 6px 14px; font-size: 0.82rem;">
                     <span>💬 Ask AI Assistant</span>
                 </button>
-                <button class="btn btn-secondary" onclick="resetSession()">🔄 Refresh Dashboard</button>
+                <button class="btn btn-secondary" onclick="resetSession()">🔄 Refresh</button>
             </div>
         </header>
 
-        <!-- Category Tab Navigation Bar (Reordered: Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels) -->
+        <!-- Category Tab Navigation Bar (Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels) -->
         <nav class="tab-navigation">
             <button class="tab-btn active" onclick="switchCategoryTab('all', this)">📊 Dashboard Overview</button>
             <button class="tab-btn" onclick="switchCategoryTab('friends', this)">👥 Attending Friends Squad</button>

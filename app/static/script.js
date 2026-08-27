@@ -1,4 +1,5 @@
-// Pulse & Plate At-A-Glance Visual Travel & Lifestyle OS Dashboard JS (Reordered Sections: Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels)
+// Pulse & Plate At-A-Glance Visual Travel & Lifestyle OS Dashboard JS
+// Features: Dual Dark / Light Theme, Reordered Sections (Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels)
 
 const USER_PROFILES = {
     alex: {
@@ -180,8 +181,50 @@ let activeCategoryTab = "all";
 let activeChatFriend = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    initTheme();
     switchUserProfile();
 });
+
+// DARK / LIGHT THEME FUNCTIONS
+function initTheme() {
+    const savedTheme = localStorage.getItem("pulse_plate_theme") || "dark";
+    if (savedTheme === "light") {
+        document.body.classList.remove("dark-theme");
+        document.body.classList.add("light-theme");
+        updateThemeBtnUI(true);
+    } else {
+        document.body.classList.remove("light-theme");
+        document.body.classList.add("dark-theme");
+        updateThemeBtnUI(false);
+    }
+}
+
+function toggleTheme() {
+    const isLight = document.body.classList.contains("light-theme");
+    if (isLight) {
+        document.body.classList.remove("light-theme");
+        document.body.classList.add("dark-theme");
+        localStorage.setItem("pulse_plate_theme", "dark");
+        updateThemeBtnUI(false);
+    } else {
+        document.body.classList.remove("dark-theme");
+        document.body.classList.add("light-theme");
+        localStorage.setItem("pulse_plate_theme", "light");
+        updateThemeBtnUI(true);
+    }
+}
+
+function updateThemeBtnUI(isLight) {
+    const iconEl = document.getElementById("themeIcon");
+    const labelEl = document.getElementById("themeLabel");
+    if (isLight) {
+        if (iconEl) iconEl.innerText = "🌙";
+        if (labelEl) labelEl.innerText = "Dark Mode";
+    } else {
+        if (iconEl) iconEl.innerText = "☀️";
+        if (labelEl) labelEl.innerText = "Light Mode";
+    }
+}
 
 function switchUserProfile() {
     const selectEl = document.getElementById("userProfileSelect");
@@ -240,11 +283,11 @@ function renderAtAGlanceDashboard(category = "all") {
                                 <div class="friend-avatar" style="width:40px; height:40px; font-size:1.2rem;">${f.avatar}</div>
                                 <div>
                                     <div style="font-weight:700; font-size:0.95rem;">${escapeHtml(f.name)}</div>
-                                    <div style="font-size:0.75rem; color:#6ee7b7;">🟢 ${f.status}</div>
+                                    <div style="font-size:0.75rem; color:#10b981;">🟢 ${f.status}</div>
                                 </div>
                             </div>
-                            <div style="font-size:0.78rem; color:#94a3b8;">🏨 Staying at: <strong>${escapeHtml(f.hotel)}</strong> (${f.distance})</div>
-                            <div style="font-size:0.78rem; color:#6ee7b7; margin-top:4px;">Diet: <strong>${f.diet}</strong></div>
+                            <div style="font-size:0.78rem; color:var(--text-secondary);">🏨 Staying at: <strong>${escapeHtml(f.hotel)}</strong> (${f.distance})</div>
+                            <div style="font-size:0.78rem; color:#10b981; margin-top:4px;">Diet: <strong>${f.diet}</strong></div>
                             <div class="travel-time-badge" style="margin-top:6px;">⏱️ You: ${f.userWalkTime} | ${f.name.split(' ')[0]}: ${f.friendWalkTime}</div>
                             
                             <div style="display:flex; gap:6px; margin-top:10px;">
@@ -264,7 +307,7 @@ function renderAtAGlanceDashboard(category = "all") {
             <section class="glance-section">
                 <div class="glance-header">
                     <h3>🏃 Popular Routes, Hikes & Places <span class="badge">${cityData.routes.length} Grounded Routes</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">Target Pace: ${currentProfile.pace}</span>
+                    <span class="subtext" style="color:#10b981;">Target Pace: ${currentProfile.pace}</span>
                 </div>
                 <div class="glance-card-grid">
                     ${cityData.routes.map(r => `
@@ -274,9 +317,9 @@ function renderAtAGlanceDashboard(category = "all") {
                                 <div class="item-card-title">${escapeHtml(r.title)}</div>
                                 <div class="item-card-meta">
                                     <span style="color:#f59e0b; font-weight:700;">${r.rating}</span>
-                                    <span style="color:#6ee7b7; font-weight:700;">${r.price}</span>
+                                    <span style="color:#10b981; font-weight:700;">${r.price}</span>
                                 </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">⛰️ ${r.meta}</div>
+                                <div style="font-size:0.72rem; color:var(--text-secondary);">⛰️ ${r.meta}</div>
                                 <div class="item-card-badge">${r.badge}</div>
                             </div>
                         </div>
@@ -292,7 +335,7 @@ function renderAtAGlanceDashboard(category = "all") {
             <section class="glance-section">
                 <div class="glance-header">
                     <h3>🥗 Dietary Restaurants & Bistros <span class="badge">${cityData.bistros.length} Grounded Bistros</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">100% Compliant with ${currentProfile.dietTags.join(", ")}</span>
+                    <span class="subtext" style="color:#10b981;">100% Compliant with ${currentProfile.dietTags.join(", ")}</span>
                 </div>
                 <div class="glance-card-grid">
                     ${cityData.bistros.map(b => `
@@ -304,7 +347,7 @@ function renderAtAGlanceDashboard(category = "all") {
                                     <span style="color:#f59e0b; font-weight:700;">${b.rating}</span>
                                     <span style="color:#10b981; font-weight:700;">${b.price}</span>
                                 </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">🥗 ${b.meta}</div>
+                                <div style="font-size:0.72rem; color:var(--text-secondary);">🥗 ${b.meta}</div>
                                 <div class="item-card-badge">${b.badge}</div>
                             </div>
                         </div>
@@ -330,9 +373,9 @@ function renderAtAGlanceDashboard(category = "all") {
                                 <div class="item-card-title">${escapeHtml(n.title)}</div>
                                 <div class="item-card-meta">
                                     <span style="color:#f59e0b; font-weight:700;">${n.rating}</span>
-                                    <span style="color:#6ee7b7; font-weight:700;">${n.price}</span>
+                                    <span style="color:#10b981; font-weight:700;">${n.price}</span>
                                 </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">🍸 ${n.meta}</div>
+                                <div style="font-size:0.72rem; color:var(--text-secondary);">🍸 ${n.meta}</div>
                                 <div class="item-card-badge">${n.badge}</div>
                             </div>
                         </div>
@@ -348,7 +391,7 @@ function renderAtAGlanceDashboard(category = "all") {
             <section class="glance-section">
                 <div class="glance-header">
                     <h3>🏨 Hotels & Stays in ${escapeHtml(currentProfile.location)} <span class="badge">${cityData.hotels.length} Grounded Hotels</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">Matching ${currentProfile.dietTags.join(" & ")} Preferences</span>
+                    <span class="subtext" style="color:#10b981;">Matching ${currentProfile.dietTags.join(" & ")} Preferences</span>
                 </div>
                 <div class="glance-card-grid">
                     ${cityData.hotels.map(h => `
@@ -360,7 +403,7 @@ function renderAtAGlanceDashboard(category = "all") {
                                     <span style="color:#f59e0b; font-weight:700;">${h.rating}</span>
                                     <span style="color:#10b981; font-weight:700;">${h.price}</span>
                                 </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">📍 ${h.meta}</div>
+                                <div style="font-size:0.72rem; color:var(--text-secondary);">📍 ${h.meta}</div>
                                 <div class="item-card-badge">${h.badge}</div>
                             </div>
                         </div>
@@ -499,11 +542,11 @@ function openFriendChatModal(friendName) {
                 <div class="friend-avatar" style="width:42px; height:42px; font-size:1.3rem;">${friend.avatar}</div>
                 <div>
                     <h3 class="modal-header-title" style="font-size:1.2rem; margin:0;">Chat with ${escapeHtml(friend.name)}</h3>
-                    <div style="font-size:0.75rem; color:#6ee7b7;">🟢 ${friend.status}</div>
+                    <div style="font-size:0.75rem; color:#10b981;">🟢 ${friend.status}</div>
                 </div>
             </div>
             <div style="text-align:right;">
-                <div style="font-size:0.75rem; color:#94a3b8;">Staying at: <strong>${escapeHtml(friend.hotel)}</strong></div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">Staying at: <strong>${escapeHtml(friend.hotel)}</strong></div>
                 <div class="travel-time-badge">⏱️ Walk to Venue: You (${friend.userWalkTime}) | ${friend.name.split(' ')[0]} (${friend.friendWalkTime})</div>
             </div>
         </div>
@@ -513,7 +556,7 @@ function openFriendChatModal(friendName) {
 
     const pillsEl = document.getElementById("friendPlacePills");
     pillsEl.innerHTML = `
-        <span style="font-size:0.75rem; color:#94a3b8; align-self:center; font-weight:700;">Pick Places Together:</span>
+        <span style="font-size:0.75rem; color:var(--text-secondary); align-self:center; font-weight:700;">Pick Places Together:</span>
         <button class="map-btn-inline" onclick="suggestPlaceToFriend('Parc Track Loop')">🏃 Suggest Track Loop (10 min both)</button>
         <button class="map-btn-inline" style="background:rgba(245,158,11,0.2); color:#f59e0b; border-color:#f59e0b;" onclick="suggestPlaceToFriend('Dietary Safe Bistro')">🥗 Suggest Dietary Bistro (12 min walk both)</button>
     `;
@@ -526,7 +569,7 @@ function renderFriendChatMessages() {
     const msgContainer = document.getElementById("friendChatMessages");
     msgContainer.innerHTML = activeChatFriend.chatHistory.map(m => `
         <div class="${m.sender === currentProfile.name ? 'chat-msg-sent' : 'chat-msg-recv'}">
-            <div style="font-size:0.7rem; color:#94a3b8; margin-bottom:2px;">${m.sender}</div>
+            <div style="font-size:0.7rem; color:var(--text-secondary); margin-bottom:2px;">${m.sender}</div>
             <div>${escapeHtml(m.text)}</div>
         </div>
     `).join("");
@@ -598,7 +641,7 @@ function openMapModal(title, queryText, externalUrl) {
             <iframe src="${embedSrc}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:#94a3b8; margin-top:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:var(--text-secondary); margin-top:8px;">
             <span>📍 Location: <strong>${escapeHtml(queryText)}</strong></span>
             <a href="${externalUrl}" target="_blank" style="color:#10b981; font-weight:700; text-decoration:none;">Open Full Screen Google Maps ↗</a>
         </div>
