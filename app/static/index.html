@@ -38,14 +38,14 @@
             </div>
         </header>
 
-        <!-- Category Tab Navigation Bar -->
+        <!-- Category Tab Navigation Bar (Reordered: Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels) -->
         <nav class="tab-navigation">
             <button class="tab-btn active" onclick="switchCategoryTab('all', this)">📊 Dashboard Overview</button>
-            <button class="tab-btn" onclick="switchCategoryTab('hotels', this)">🏨 Hotels & Stays</button>
-            <button class="tab-btn" onclick="switchCategoryTab('routes', this)">🏃 Routes & Hikes</button>
-            <button class="tab-btn" onclick="switchCategoryTab('bistros', this)">🥗 Dietary Bistros</button>
+            <button class="tab-btn" onclick="switchCategoryTab('friends', this)">👥 Attending Friends Squad</button>
+            <button class="tab-btn" onclick="switchCategoryTab('routes', this)">🏃 Routes & Places</button>
+            <button class="tab-btn" onclick="switchCategoryTab('bistros', this)">🥗 Dietary Restaurants</button>
             <button class="tab-btn" onclick="switchCategoryTab('nightlife', this)">🎭 Events & Nightlife</button>
-            <button class="tab-btn" onclick="switchCategoryTab('friends', this)">👥 Attending Friends squad</button>
+            <button class="tab-btn" onclick="switchCategoryTab('hotels', this)">🏨 Hotels & Stays</button>
         </nav>
 
         <!-- Main At-A-Glance Dashboard Layout -->
@@ -127,7 +127,7 @@
             <!-- Drawer Console Input -->
             <div class="input-console" style="padding-top:10px;">
                 <div class="input-wrapper">
-                    <textarea id="userInput" placeholder="Ask AI assistant about hotels, routes, dietary food, friends..." rows="2" onkeydown="handleKeyPress(event)"></textarea>
+                    <textarea id="userInput" placeholder="Ask AI assistant about friends, places, restaurants, hotels..." rows="2" onkeydown="handleKeyPress(event)"></textarea>
                     <button class="send-btn" id="sendBtn" onclick="submitMessage()">
                         <span>Send</span>
                     </button>

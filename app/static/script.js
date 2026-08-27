@@ -1,4 +1,4 @@
-// Pulse & Plate At-A-Glance Visual Travel & Lifestyle OS Dashboard JS
+// Pulse & Plate At-A-Glance Visual Travel & Lifestyle OS Dashboard JS (Reordered Sections: Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels)
 
 const USER_PROFILES = {
     alex: {
@@ -14,12 +14,12 @@ const USER_PROFILES = {
         budget: "$2,000 ($500/day limit)",
         sessionId: "session_alex_morgan_gf_vegan",
         quickActions: [
-            { label: "Hotels Near Arc de Triomphe", prompt: "Find gluten-free friendly luxury hotels near Paris Marathon start line.", icon: "🏨" },
+            { label: "Friends Attending Marathon", prompt: "Show friends attending Paris Marathon 2026 and calculate travel times for us.", icon: "👥" },
             { label: "Marathon Shakeout Loops", prompt: "Find popular 5k running loops in Paris with travel times.", icon: "🏃" },
-            { label: "Vegan GF Dining Options", prompt: "Recommend top-rated vegan and gluten-free bistros in Paris.", icon: "🥗" },
-            { label: "Post-Marathon Nightlife", prompt: "Show post-marathon rooftop lounges and celebration nightlife in Paris.", icon: "🎭" }
+            { label: "Vegan GF Bistros", prompt: "Recommend top-rated vegan and gluten-free bistros in Paris.", icon: "🥗" },
+            { label: "Hotels Near Arc de Triomphe", prompt: "Find gluten-free friendly luxury hotels near Paris Marathon start line.", icon: "🏨" }
         ],
-        welcomeText: "Active Athlete: <strong>Alex Morgan</strong> (Gluten-Free & Vegan Marathoner). Explore Paris hotels, running loops, bistros, nightlife, and friends below!"
+        welcomeText: "Active Athlete: <strong>Alex Morgan</strong> (Gluten-Free & Vegan Marathoner). Explore friends, running loops, bistros, nightlife, and hotels below!"
     },
     sarah: {
         id: "sarah",
@@ -34,12 +34,12 @@ const USER_PROFILES = {
         budget: "$3,500 ($875/day limit)",
         sessionId: "session_sarah_chen_keto_nutfree",
         quickActions: [
-            { label: "Bike Storage Hotels Nice", prompt: "Find luxury hotels with secure bike storage near Promenade des Anglais, Nice.", icon: "🏨" },
+            { label: "Friends Attending Ironman", prompt: "Show friends attending Nice Ironman and calculate travel times.", icon: "👥" },
             { label: "Coastal Cycling Loops", prompt: "Find popular cycling routes and climbs like Col d'Èze in Nice.", icon: "🚴" },
-            { label: "Keto & Nut-Free Dining", prompt: "Find top-rated Keto seafood bistros in Nice.", icon: "🥩" },
-            { label: "Riviera Rooftop Lounges", prompt: "Show rooftop cocktail lounges in Nice with sea views.", icon: "🎭" }
+            { label: "Keto & Nut-Free Bistros", prompt: "Find top-rated Keto seafood bistros in Nice.", icon: "🥩" },
+            { label: "Bike Storage Hotels Nice", prompt: "Find luxury hotels with secure bike storage near Promenade des Anglais, Nice.", icon: "🏨" }
         ],
-        welcomeText: "Active Athlete: <strong>Sarah Chen</strong> (Keto & Nut-Free Triathlete). Explore Riviera hotels, cycling climbs, keto dining, nightlife, and friends below!"
+        welcomeText: "Active Athlete: <strong>Sarah Chen</strong> (Keto & Nut-Free Triathlete). Explore friends, cycling climbs, keto dining, nightlife, and hotels below!"
     },
     marcus: {
         id: "marcus",
@@ -54,12 +54,12 @@ const USER_PROFILES = {
         budget: "$1,500 ($375/day limit)",
         sessionId: "session_marcus_vance_lf_pescatarian",
         quickActions: [
-            { label: "Alpine Trailhead Lodges", prompt: "Find scenic mountain lodges in Interlaken under $1,500 budget.", icon: "🏔️" },
+            { label: "Friends Attending Alps Hike", prompt: "Show friends attending Swiss Alps Hike and calculate travel times.", icon: "👥" },
             { label: "Harder Kulm & Eiger Hikes", prompt: "Find popular alpine hikes and ski runs in Interlaken.", icon: "🥾" },
             { label: "Lactose-Free Lake Fish Dining", prompt: "Recommend lactose-free pescatarian dining in Interlaken.", icon: "🐟" },
-            { label: "Sunset Peak Lounges", prompt: "Show panoramic alpine lounges and live music bars in Interlaken.", icon: "🎭" }
+            { label: "Alpine Trailhead Lodges", prompt: "Find scenic mountain lodges in Interlaken under $1,500 budget.", icon: "🏔️" }
         ],
-        welcomeText: "Active Traveler: <strong>Marcus Vance</strong> (Lactose-Free & Pescatarian Hiker). Explore alpine lodges, trail hikes, lakeside dining, nightlife, and friends below!"
+        welcomeText: "Active Traveler: <strong>Marcus Vance</strong> (Lactose-Free & Pescatarian Hiker). Explore friends, trail hikes, lakeside dining, nightlife, and hotels below!"
     }
 };
 
@@ -207,7 +207,7 @@ function switchUserProfile() {
         </button>
     `).join("");
 
-    // Render At-A-Glance Visual Dashboard Grid
+    // Render At-A-Glance Visual Dashboard Grid (Friends -> Routes -> Bistros -> Nightlife -> Hotels)
     renderAtAGlanceDashboard(activeCategoryTab);
 }
 
@@ -225,119 +225,7 @@ function renderAtAGlanceDashboard(category = "all") {
 
     let html = "";
 
-    // 1. HOTELS SECTION
-    if (category === "all" || category === "hotels") {
-        html += `
-            <section class="glance-section">
-                <div class="glance-header">
-                    <h3>🏨 Top 5 Hotels & Stays in ${escapeHtml(currentProfile.location)} <span class="badge">${cityData.hotels.length} Grounded Hotels</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">Matching ${currentProfile.dietTags.join(" & ")} Preferences</span>
-                </div>
-                <div class="glance-card-grid">
-                    ${cityData.hotels.map(h => `
-                        <div class="item-card" onclick="openMapModal('${escapeHtml(h.title)}', '${escapeHtml(h.queryText)}', '${h.mapsUrl}')">
-                            <img src="${h.img}" class="item-card-img" alt="${escapeHtml(h.title)}"/>
-                            <div class="item-card-body">
-                                <div class="item-card-title">${escapeHtml(h.title)}</div>
-                                <div class="item-card-meta">
-                                    <span style="color:#f59e0b; font-weight:700;">${h.rating}</span>
-                                    <span style="color:#10b981; font-weight:700;">${h.price}</span>
-                                </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">📍 ${h.meta}</div>
-                                <div class="item-card-badge">${h.badge}</div>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
-            </section>
-        `;
-    }
-
-    // 2. ROUTES & HIKES SECTION
-    if (category === "all" || category === "routes") {
-        html += `
-            <section class="glance-section">
-                <div class="glance-header">
-                    <h3>🏃 5 Popular Routes, Hikes & Ski Runs <span class="badge">${cityData.routes.length} Grounded Routes</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">Target Pace: ${currentProfile.pace}</span>
-                </div>
-                <div class="glance-card-grid">
-                    ${cityData.routes.map(r => `
-                        <div class="item-card" onclick="openMapModal('${escapeHtml(r.title)}', '${escapeHtml(r.queryText)}', '${r.mapsUrl}')">
-                            <img src="${r.img}" class="item-card-img" alt="${escapeHtml(r.title)}"/>
-                            <div class="item-card-body">
-                                <div class="item-card-title">${escapeHtml(r.title)}</div>
-                                <div class="item-card-meta">
-                                    <span style="color:#f59e0b; font-weight:700;">${r.rating}</span>
-                                    <span style="color:#6ee7b7; font-weight:700;">${r.price}</span>
-                                </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">⛰️ ${r.meta}</div>
-                                <div class="item-card-badge">${r.badge}</div>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
-            </section>
-        `;
-    }
-
-    // 3. DIETARY BISTROS SECTION
-    if (category === "all" || category === "bistros") {
-        html += `
-            <section class="glance-section">
-                <div class="glance-header">
-                    <h3>🥗 5 Top-Rated Dietary Bistros & Dining <span class="badge">${cityData.bistros.length} Grounded Bistros</span></h3>
-                    <span class="subtext" style="color:#6ee7b7;">100% Compliant with ${currentProfile.dietTags.join(", ")}</span>
-                </div>
-                <div class="glance-card-grid">
-                    ${cityData.bistros.map(b => `
-                        <div class="item-card" onclick="openMapModal('${escapeHtml(b.title)}', '${escapeHtml(b.queryText)}', '${b.mapsUrl}')">
-                            <img src="${b.img}" class="item-card-img" alt="${escapeHtml(b.title)}"/>
-                            <div class="item-card-body">
-                                <div class="item-card-title">${escapeHtml(b.title)}</div>
-                                <div class="item-card-meta">
-                                    <span style="color:#f59e0b; font-weight:700;">${b.rating}</span>
-                                    <span style="color:#10b981; font-weight:700;">${b.price}</span>
-                                </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">🥗 ${b.meta}</div>
-                                <div class="item-card-badge">${b.badge}</div>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
-            </section>
-        `;
-    }
-
-    // 4. EVENTS & NIGHTLIFE SECTION
-    if (category === "all" || category === "nightlife") {
-        html += `
-            <section class="glance-section">
-                <div class="glance-header">
-                    <h3>🎭 5 Local Events & Nightlife Lounges <span class="badge">${cityData.nightlife.length} Grounded Venues</span></h3>
-                    <span class="subtext">Rooftop Bars, Live Music & Post-Event Celebrations</span>
-                </div>
-                <div class="glance-card-grid">
-                    ${cityData.nightlife.map(n => `
-                        <div class="item-card" onclick="openMapModal('${escapeHtml(n.title)}', '${escapeHtml(n.queryText)}', '${n.mapsUrl}')">
-                            <img src="${n.img}" class="item-card-img" alt="${escapeHtml(n.title)}"/>
-                            <div class="item-card-body">
-                                <div class="item-card-title">${escapeHtml(n.title)}</div>
-                                <div class="item-card-meta">
-                                    <span style="color:#f59e0b; font-weight:700;">${n.rating}</span>
-                                    <span style="color:#6ee7b7; font-weight:700;">${n.price}</span>
-                                </div>
-                                <div style="font-size:0.72rem; color:#94a3b8;">🍸 ${n.meta}</div>
-                                <div class="item-card-badge">${n.badge}</div>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
-            </section>
-        `;
-    }
-
-    // 5. ATTENDING FRIENDS SQUAD SECTION
+    // 1. ATTENDING FRIENDS SQUAD SECTION (FIRST AT TOP)
     if (category === "all" || category === "friends") {
         html += `
             <section class="glance-section">
@@ -362,6 +250,118 @@ function renderAtAGlanceDashboard(category = "all") {
                             <div style="display:flex; gap:6px; margin-top:10px;">
                                 <button class="send-btn" style="flex:1; justify-content:center; padding:6px; font-size:0.75rem;" onclick="openFriendChatModal('${escapeHtml(f.name)}')">💬 Chat</button>
                                 <button class="map-btn-inline" style="flex:1;" onclick="openMapModal('${escapeHtml(f.name)}\\'s Hotel', '${escapeHtml(f.queryText)}', '${f.mapsUrl}')">📍 Map Hotel</button>
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            </section>
+        `;
+    }
+
+    // 2. ROUTES & PLACES SECTION (SECOND)
+    if (category === "all" || category === "routes") {
+        html += `
+            <section class="glance-section">
+                <div class="glance-header">
+                    <h3>🏃 Popular Routes, Hikes & Places <span class="badge">${cityData.routes.length} Grounded Routes</span></h3>
+                    <span class="subtext" style="color:#6ee7b7;">Target Pace: ${currentProfile.pace}</span>
+                </div>
+                <div class="glance-card-grid">
+                    ${cityData.routes.map(r => `
+                        <div class="item-card" onclick="openMapModal('${escapeHtml(r.title)}', '${escapeHtml(r.queryText)}', '${r.mapsUrl}')">
+                            <img src="${r.img}" class="item-card-img" alt="${escapeHtml(r.title)}"/>
+                            <div class="item-card-body">
+                                <div class="item-card-title">${escapeHtml(r.title)}</div>
+                                <div class="item-card-meta">
+                                    <span style="color:#f59e0b; font-weight:700;">${r.rating}</span>
+                                    <span style="color:#6ee7b7; font-weight:700;">${r.price}</span>
+                                </div>
+                                <div style="font-size:0.72rem; color:#94a3b8;">⛰️ ${r.meta}</div>
+                                <div class="item-card-badge">${r.badge}</div>
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            </section>
+        `;
+    }
+
+    // 3. DIETARY RESTAURANTS & BISTROS SECTION (THIRD)
+    if (category === "all" || category === "bistros") {
+        html += `
+            <section class="glance-section">
+                <div class="glance-header">
+                    <h3>🥗 Dietary Restaurants & Bistros <span class="badge">${cityData.bistros.length} Grounded Bistros</span></h3>
+                    <span class="subtext" style="color:#6ee7b7;">100% Compliant with ${currentProfile.dietTags.join(", ")}</span>
+                </div>
+                <div class="glance-card-grid">
+                    ${cityData.bistros.map(b => `
+                        <div class="item-card" onclick="openMapModal('${escapeHtml(b.title)}', '${escapeHtml(b.queryText)}', '${b.mapsUrl}')">
+                            <img src="${b.img}" class="item-card-img" alt="${escapeHtml(b.title)}"/>
+                            <div class="item-card-body">
+                                <div class="item-card-title">${escapeHtml(b.title)}</div>
+                                <div class="item-card-meta">
+                                    <span style="color:#f59e0b; font-weight:700;">${b.rating}</span>
+                                    <span style="color:#10b981; font-weight:700;">${b.price}</span>
+                                </div>
+                                <div style="font-size:0.72rem; color:#94a3b8;">🥗 ${b.meta}</div>
+                                <div class="item-card-badge">${b.badge}</div>
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            </section>
+        `;
+    }
+
+    // 4. EVENTS & NIGHTLIFE SECTION (FOURTH)
+    if (category === "all" || category === "nightlife") {
+        html += `
+            <section class="glance-section">
+                <div class="glance-header">
+                    <h3>🎭 Local Events & Nightlife Lounges <span class="badge">${cityData.nightlife.length} Grounded Venues</span></h3>
+                    <span class="subtext">Rooftop Bars, Live Music & Post-Event Celebrations</span>
+                </div>
+                <div class="glance-card-grid">
+                    ${cityData.nightlife.map(n => `
+                        <div class="item-card" onclick="openMapModal('${escapeHtml(n.title)}', '${escapeHtml(n.queryText)}', '${n.mapsUrl}')">
+                            <img src="${n.img}" class="item-card-img" alt="${escapeHtml(n.title)}"/>
+                            <div class="item-card-body">
+                                <div class="item-card-title">${escapeHtml(n.title)}</div>
+                                <div class="item-card-meta">
+                                    <span style="color:#f59e0b; font-weight:700;">${n.rating}</span>
+                                    <span style="color:#6ee7b7; font-weight:700;">${n.price}</span>
+                                </div>
+                                <div style="font-size:0.72rem; color:#94a3b8;">🍸 ${n.meta}</div>
+                                <div class="item-card-badge">${n.badge}</div>
+                            </div>
+                        </div>
+                    `).join("")}
+                </div>
+            </section>
+        `;
+    }
+
+    // 5. HOTELS & STAYS SECTION (FIFTH AT BOTTOM)
+    if (category === "all" || category === "hotels") {
+        html += `
+            <section class="glance-section">
+                <div class="glance-header">
+                    <h3>🏨 Hotels & Stays in ${escapeHtml(currentProfile.location)} <span class="badge">${cityData.hotels.length} Grounded Hotels</span></h3>
+                    <span class="subtext" style="color:#6ee7b7;">Matching ${currentProfile.dietTags.join(" & ")} Preferences</span>
+                </div>
+                <div class="glance-card-grid">
+                    ${cityData.hotels.map(h => `
+                        <div class="item-card" onclick="openMapModal('${escapeHtml(h.title)}', '${escapeHtml(h.queryText)}', '${h.mapsUrl}')">
+                            <img src="${h.img}" class="item-card-img" alt="${escapeHtml(h.title)}"/>
+                            <div class="item-card-body">
+                                <div class="item-card-title">${escapeHtml(h.title)}</div>
+                                <div class="item-card-meta">
+                                    <span style="color:#f59e0b; font-weight:700;">${h.rating}</span>
+                                    <span style="color:#10b981; font-weight:700;">${h.price}</span>
+                                </div>
+                                <div style="font-size:0.72rem; color:#94a3b8;">📍 ${h.meta}</div>
+                                <div class="item-card-badge">${h.badge}</div>
                             </div>
                         </div>
                     `).join("")}
