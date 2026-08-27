@@ -42,7 +42,7 @@
             </div>
         </header>
 
-        <!-- Category Tab Navigation Bar (Friends -> Routes/Places -> Bistros/Restaurants -> Nightlife -> Hotels) -->
+        <!-- Category Tab Navigation Bar -->
         <nav class="tab-navigation">
             <button class="tab-btn active" onclick="switchCategoryTab('all', this)">📊 Dashboard Overview</button>
             <button class="tab-btn" onclick="switchCategoryTab('friends', this)">👥 Attending Friends Squad</button>
@@ -50,12 +50,19 @@
             <button class="tab-btn" onclick="switchCategoryTab('bistros', this)">🥗 Dietary Restaurants</button>
             <button class="tab-btn" onclick="switchCategoryTab('nightlife', this)">🎭 Events & Nightlife</button>
             <button class="tab-btn" onclick="switchCategoryTab('hotels', this)">🏨 Hotels & Stays</button>
+            <button class="tab-btn" onclick="switchCategoryTab('itinerary', this)" style="border-color:#10b981; color:#10b981;">📅 Daily Itinerary</button>
+            <button class="tab-btn" onclick="switchCategoryTab('expenses', this)" style="border-color:#f59e0b; color:#f59e0b;">💰 Expense Splitter</button>
         </nav>
 
         <!-- Main At-A-Glance Dashboard Layout -->
         <main class="dashboard-grid" style="grid-template-columns: 320px 1fr;">
-            <!-- Left Sidebar: Active Persona Summary Card -->
+            <!-- Left Sidebar: Active Persona Summary Card & Live Weather Widget -->
             <aside class="sidebar">
+                <!-- Live Weather & Race-Day Conditions Widget -->
+                <section class="card weather-card" id="weatherWidgetCard" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1)); border: 1px solid var(--emerald-primary);">
+                    <!-- Dynamically populated weather widget -->
+                </section>
+
                 <!-- Profile Summary Card -->
                 <section class="card profile-card">
                     <div class="card-header">
@@ -140,11 +147,11 @@
         </div>
     </div>
 
-    <!-- Clickable Details Pop-up Modal -->
-    <div id="detailModal" class="modal-overlay hidden" onclick="handleModalBackdropClick(event)">
-        <div class="modal-container">
-            <button class="modal-close-btn" onclick="closeDetailModal()">✖</button>
-            <div id="modalContent">
+    <!-- Rich Photo Gallery & Review Modal -->
+    <div id="photoReviewModal" class="modal-overlay hidden" onclick="handlePhotoReviewBackdropClick(event)">
+        <div class="modal-container" style="max-width:800px;">
+            <button class="modal-close-btn" onclick="closePhotoReviewModal()">✖</button>
+            <div id="photoReviewModalContent">
                 <!-- Dynamically populated by script.js -->
             </div>
         </div>
