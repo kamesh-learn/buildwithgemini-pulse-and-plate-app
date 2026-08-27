@@ -35,10 +35,10 @@ const USER_PROFILES = {
         budget: "$3,500 ($875/day limit)",
         sessionId: "session_sarah_chen_keto_nutfree",
         quickActions: [
-            { label: "Boston Marathon 2026", prompt: "Plan for Boston Marathon next month and show Boston hotels, routes, and keto dining.", icon: "🏙️" },
-            { label: "Coastal Cycling Loops", prompt: "Find popular cycling routes and climbs in active city.", icon: "🚴" },
-            { label: "Keto & Nut-Free Bistros", prompt: "Find top-rated Keto seafood bistros in active city.", icon: "🥩" },
-            { label: "Friends Attending Event", prompt: "Show friends attending event and calculate travel times.", icon: "👥" }
+            { label: "Col d'Èze Coastal Climb", prompt: "Find coastal cycling routes, climbs, and bike storage in Nice.", icon: "🚴" },
+            { label: "Keto & Nut-Free Bistros", prompt: "Find top-rated Keto seafood bistros in Nice.", icon: "🥩" },
+            { label: "Bike-Friendly Stays", prompt: "Recommend luxury hotels in Nice with locked bike storage and keto breakfast.", icon: "🏨" },
+            { label: "Nice Squad Attending", prompt: "Show friends attending Nice Ironman and calculate travel times.", icon: "👥" }
         ],
         welcomeText: "Active Athlete: <strong>Sarah Chen</strong> (Keto & Nut-Free Triathlete). Explore friends, cycling climbs, keto dining, nightlife, and hotels below!"
     },
@@ -55,10 +55,10 @@ const USER_PROFILES = {
         budget: "$1,500 ($375/day limit)",
         sessionId: "session_marcus_vance_lf_pescatarian",
         quickActions: [
-            { label: "Boston Marathon 2026", prompt: "Plan for Boston Marathon next month and show Boston hotels, routes, and seafood bistros.", icon: "🏙️" },
-            { label: "Harder Kulm & Hikes", prompt: "Find popular hikes and trails in active city.", icon: "🥾" },
-            { label: "Lactose-Free Fish Dining", prompt: "Recommend lactose-free pescatarian dining in active city.", icon: "🐟" },
-            { label: "Friends Attending Event", prompt: "Show friends attending event and calculate travel times.", icon: "👥" }
+            { label: "Harder Kulm Alpine Hike", prompt: "Find popular alpine hikes, trail tracks, and elevation gain in Interlaken.", icon: "🥾" },
+            { label: "Lactose-Free Fish Dining", prompt: "Recommend lactose-free pescatarian lakeside dining in Interlaken.", icon: "🐟" },
+            { label: "Alpine Sunset Lounges", prompt: "Show sunset panorama rooftop bars and alpine bonfire lounges in Interlaken.", icon: "🏔️" },
+            { label: "Hike Squad Attending", prompt: "Show friends attending Swiss Alps Trail Hike and calculate walking times.", icon: "👥" }
         ],
         welcomeText: "Active Traveler: <strong>Marcus Vance</strong> (Lactose-Free & Pescatarian Hiker). Explore friends, trail hikes, lakeside dining, nightlife, and hotels below!"
     }
